@@ -20,7 +20,7 @@ CREATE TABLE (IF NOT EXISTS) productStyle (
   name VARCHAR NOT NULL,
   original_price VARCHAR NOT NULL,
   sale_price VARCHAR NOT NULL,
-  default? BOOLEAN,
+  default BOOLEAN,
   skus_id (JOINT WITH SKUS ID),
   PRIMARY KEY(id),
   FOREIGN KEY(product_id) REFERENCES productInfo(id),

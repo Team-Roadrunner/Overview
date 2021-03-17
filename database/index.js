@@ -2,58 +2,58 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/overview', { useNewUrlParser: true });
 
-let productInfoSchema = new mongoose.Schema({
+let productsSchema = new mongoose.Schema({
   id: Number,
   name: String,
   slogan: String,
   description: String,
   category: String,
-  default_price: String,
+  deafult_price: String,
+  features: [
+    {
+      feature: String,
+      value: String,
+    }
+  ],
 });
 
-const product = mongoose.model('ProductId', productInfoSchema);
+let products = mongoose.model('Products', productsSchema);
 
-let productStyleSchema = new mongoose.Schema({
+let productStylesSchema = new mongoose.Schema({
+  product_id: Number,
+  results: [
+    {
+      style_id: Number,
+      name: String,
+      original_price: String,
+      default: Boolean,
+      photos: [
+        {
+          thumbnail_url: String,
+          url: String,
+        }
+      ],
+      skus: {
+        id: {
+          quantity: Number,
+          size: String,
+        }
+      }
+    }
+  ]
+});
+
+let productStyles = mongoose.model('ProductStyles', productStylesSchema);
+
+let relatedProductsSchema = new mongoose.Schema({
+  product_id: Number,
   id: Number,
-  productId: String,
-  name: String,
-  sale_price: String,
-  original_price: String,
-  default_style: String,
 });
 
-const productStyle = mongoose.model('ProductStyle', productStyleSchema);
+let relatedProducts = mongoose.model('RelatedProducts', relatedProductsSchema);
 
-let featuresSchema = new mongoose.Schema({
-  productId: Number,
-  fabric: String,
-  Canvas: String,
-});
-
-const features = mongoose.model('Features', featuresSchema);
-
-let skusSchema = new mongoose.Schema({
-  id: Number,
-  styleId: Number,
-  size: String,
-  quantity: Number,
-});
-
-const skus = mongoose.model('Skus', skusSchema);
-
-let photosSchema = new mongoose.Schema({
-  id: Number,
-  styleId: Number,
-  url: String,
-  thumbnail_url: String,
-});
-
-const photos = mongoose.model('Photos', photosSchema);
-
-let relatedProductSchema = new mongoose.Schema({
-  id: Number,
-  current_product_id: Number,
-  related_product_id: Number,
-});
-
-const relatedProduct = mongoose.model('RelatedProduct', relatedProductSchema);
+module.exports = {
+  products,
+  productStyles,
+  relatedProducts
+}
