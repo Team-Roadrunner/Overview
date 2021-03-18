@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/overview', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/overview', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let productsSchema = new mongoose.Schema({
   id: Number,
@@ -13,7 +13,7 @@ let productsSchema = new mongoose.Schema({
     {
       feature: String,
       value: String,
-    }
+    },
   ],
 });
 
@@ -23,7 +23,7 @@ let productStylesSchema = new mongoose.Schema({
   product_id: Number,
   results: [
     {
-      style_id: Number,
+      style_id: String,
       name: String,
       original_price: String,
       default: Boolean,
@@ -31,16 +31,16 @@ let productStylesSchema = new mongoose.Schema({
         {
           thumbnail_url: String,
           url: String,
-        }
+        },
       ],
       skus: {
         id: {
-          quantity: Number,
+          quantity: String,
           size: String,
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 });
 
 let productStyles = mongoose.model('ProductStyles', productStylesSchema);
@@ -52,8 +52,4 @@ let relatedProductsSchema = new mongoose.Schema({
 
 let relatedProducts = mongoose.model('RelatedProducts', relatedProductsSchema);
 
-module.exports = {
-  products,
-  productStyles,
-  relatedProducts
-}
+module.exports = products;
