@@ -11,8 +11,6 @@ const cartController = require('./cart/controller.js');
 const questionsController = require('./qa/controller.js');
 const interactionsController = require('./interactions/controller.js');
 
-
-
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
