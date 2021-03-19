@@ -1,7 +1,7 @@
 const LineInputStream = require('line-by-line');
 const path = require('path');
 const mongoose = require('mongoose');
-const products = require('./index.js');
+const { relatedProducts } = require('./index.js');
 
 const stream = new LineInputStream(path.join(__dirname, '../../product.csv'));
 
@@ -9,7 +9,7 @@ const stream = new LineInputStream(path.join(__dirname, '../../product.csv'));
 
 mongoose.connection.on('open', (err, conn) => {
   // lower level method, needs connection
-  let bulk = products.collection.initializeOrderedBulkOp();
+  let bulk = relatedProducts.collection.initializeOrderedBulkOp();
   let counter = 0;
 
   stream.on('error', (err) => {
@@ -19,14 +19,10 @@ mongoose.connection.on('open', (err, conn) => {
   stream.on('line', (line) => {
     const row = line.split(','); // split the lines on delimiter
     // eslint-disable-next-line new-cap
-    const obj = new products({
+    const obj = new relatedProducts({
       id: row[0],
-      name: row[1],
-      slogan: row[2],
-      description: row[3],
-      category: row[4],
-      default_price: row[5],
-      features: [],
+      current_product_id: row[1],
+      related_product_id: row[2],
     });
     // other manipulation
 
@@ -40,7 +36,7 @@ mongoose.connection.on('open', (err, conn) => {
       bulk.execute((err, result) => {
         if (err) throw err;
         // possibly do something with result
-        bulk = products.collection.initializeOrderedBulkOp();
+        bulk = relatedProducts.collection.initializeOrderedBulkOp();
         stream.resume();
       });
     }
@@ -53,5 +49,6 @@ mongoose.connection.on('open', (err, conn) => {
       // maybe look at result
       });
     }
+    console.log('done');
   });
 });

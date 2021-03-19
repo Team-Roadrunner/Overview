@@ -1,15 +1,16 @@
+/* eslint-disable max-len */
 const LineInputStream = require('line-by-line');
 const path = require('path');
 const mongoose = require('mongoose');
-const products = require('./index.js');
+const { styles, skus } = require('./index.js');
 
-const stream = new LineInputStream(path.join(__dirname, '../../product.csv'));
+const stream = new LineInputStream(path.join(__dirname, '../../skus.csv'));
 
 // stream.setDelimiter('\n');
 
 mongoose.connection.on('open', (err, conn) => {
   // lower level method, needs connection
-  let bulk = products.collection.initializeOrderedBulkOp();
+  let bulk = styles.collection.initializeOrderedBulkOp();
   let counter = 0;
 
   stream.on('error', (err) => {
@@ -19,18 +20,17 @@ mongoose.connection.on('open', (err, conn) => {
   stream.on('line', (line) => {
     const row = line.split(','); // split the lines on delimiter
     // eslint-disable-next-line new-cap
-    const obj = new products({
+    const obj = new skus({
       id: row[0],
-      name: row[1],
-      slogan: row[2],
-      description: row[3],
-      category: row[4],
-      default_price: row[5],
-      features: [],
+      styleId: row[1],
+      size: row[2],
+      quantity: row[3],
     });
     // other manipulation
 
-    bulk.insert(obj); // Bulk is okay if you don't need schema
+    bulk.find({ results: { $elemMatch: { id: Number(row[1]) } } }).updateOne({ $set: { 'results.$.skus': obj } });
+    // bulk.find({ id: Number(row[1]) }).upsert().update({ $addToSet: { features: obj } });
+    // Bulk is okay if you don't need schema
     // defaults. Or can just set them.
 
     counter++;
@@ -40,7 +40,7 @@ mongoose.connection.on('open', (err, conn) => {
       bulk.execute((err, result) => {
         if (err) throw err;
         // possibly do something with result
-        bulk = products.collection.initializeOrderedBulkOp();
+        bulk = styles.collection.initializeOrderedBulkOp();
         stream.resume();
       });
     }
@@ -53,5 +53,6 @@ mongoose.connection.on('open', (err, conn) => {
       // maybe look at result
       });
     }
+    console.log('done');
   });
 });

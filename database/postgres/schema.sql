@@ -47,8 +47,15 @@ CREATE TABLE photos (
   FOREIGN KEY(style_id) REFERENCES productStyle(id)
 );
 
+CREATE TABLE related (
+  id INT PRIMARY KEY,
+  current_product_id INTEGER,
+  related_product_id INTEGER
+);
+
 \COPY productinfo FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/product.csv' DELIMITER ',' CSV HEADER;
 \COPY productstyle FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/styles.csv' DELIMITER ',' CSV HEADER;
 \COPY skus FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/skus.csv' DELIMITER ',' CSV HEADER;
 \COPY features FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/features.csv' DELIMITER ',' CSV HEADER;
 \COPY photos FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/photos.csv' DELIMITER ',' CSV HEADER;
+\COPY related FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/related.csv' DELIMITER ',' CSV HEADER;

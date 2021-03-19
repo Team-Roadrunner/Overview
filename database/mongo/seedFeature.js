@@ -2,7 +2,7 @@
 const LineInputStream = require('line-by-line');
 const path = require('path');
 const mongoose = require('mongoose');
-const { products, features } = require('./schema.js');
+const { products, features } = require('./index.js');
 
 const stream = new LineInputStream(path.join(__dirname, '../../features.csv'));
 

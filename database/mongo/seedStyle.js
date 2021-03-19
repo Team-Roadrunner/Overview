@@ -1,7 +1,7 @@
 const LineInputStream = require('line-by-line');
 const path = require('path');
 const mongoose = require('mongoose');
-const productStyles = require('./schema.js');
+const { styles } = require('./index.js');
 
 const stream = new LineInputStream(path.join(__dirname, '../../styles.csv'));
 
@@ -9,7 +9,7 @@ const stream = new LineInputStream(path.join(__dirname, '../../styles.csv'));
 
 mongoose.connection.on('open', (err, conn) => {
   // lower level method, needs connection
-  let bulk = productStyles.collection.initializeOrderedBulkOp();
+  let bulk = styles.collection.initializeOrderedBulkOp();
   let counter = 0;
 
   stream.on('error', (err) => {
@@ -19,7 +19,7 @@ mongoose.connection.on('open', (err, conn) => {
   stream.on('line', (line) => {
     const row = line.split(','); // split the lines on delimiter
     // eslint-disable-next-line new-cap
-    const obj = new productStyles({
+    const obj = new styles({
       product_id: row[1],
       results: [
         {
@@ -29,7 +29,7 @@ mongoose.connection.on('open', (err, conn) => {
           original_price: row[4],
           default: row[5],
           photos: [],
-          skus: [],
+          skus: {},
         },
       ],
     });
@@ -45,7 +45,7 @@ mongoose.connection.on('open', (err, conn) => {
       bulk.execute((err, result) => {
         if (err) throw err;
         // possibly do something with result
-        bulk = productStyles.collection.initializeOrderedBulkOp();
+        bulk = styles.collection.initializeOrderedBulkOp();
         stream.resume();
       });
     }
