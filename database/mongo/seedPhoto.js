@@ -21,14 +21,12 @@ mongoose.connection.on('open', (err, conn) => {
     const row = line.split(','); // split the lines on delimiter
     // eslint-disable-next-line new-cap
     const obj = new photos({
-      id: row[0],
-      styleId: row[1],
       url: row[2],
       thumbnail_url: row[3],
     });
     // other manipulation
 
-    bulk.find({ results: { $elemMatch: { id: Number(row[1]) } } }).updateOne({ $addToSet: { 'results.$.photos': obj } });
+    bulk.find({ results: { $elemMatch: { style_id: Number(row[1]) } } }).updateOne({ $addToSet: { 'results.$.photos': obj } });
     // bulk.find({ id: Number(row[1]) }).upsert().update({ $addToSet: { features: obj } });
     // Bulk is okay if you don't need schema
     // defaults. Or can just set them.

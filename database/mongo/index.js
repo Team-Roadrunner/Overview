@@ -1,6 +1,13 @@
+/* eslint-disable no-plusplus */
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/productOverview', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const styles = mongoose.model('styles', new mongoose.Schema({ product_id: Number }, { versionKey: false }));
+
+// for (let i = 940002; i <= 940001; i++) {
+//   styles.create({ product_id: i });
+// }
 
 const productsSchema = new mongoose.Schema({
   id: { type: Number, index: true },
@@ -16,36 +23,19 @@ productsSchema.index({ id: 1 });
 const products = mongoose.model('Products', productsSchema);
 
 const productStylesSchema = new mongoose.Schema({
-  product_id: Number,
-  results: [
-    {
-      style_id: { type: Number, index: true },
-      name: String,
-      sale_price: String,
-      original_price: String,
-      default: Boolean,
-      photos: [
-        {
-          thumbnail_url: String,
-          url: String,
-        },
-      ],
-      skus: {
-        id: {
-          quantity: String,
-          size: String,
-        },
-      },
-    },
-  ],
+  style_id: Number,
+  name: String,
+  sale_price: String,
+  original_price: String,
+  default: Boolean,
+  photos: Array,
+  skus: Object,
 });
 
 productStylesSchema.index({ id: 1 });
-const styles = mongoose.model('Styles', productStylesSchema);
+const productStyles = mongoose.model('Styles', productStylesSchema);
 
 const relatedProductsSchema = new mongoose.Schema({
-  id: Number,
-  current_product_id: Number,
   related_product_id: Number,
 });
 
@@ -61,8 +51,6 @@ const featuresSchema = new mongoose.Schema({
 const features = mongoose.model('Features', featuresSchema);
 
 const skusSchema = new mongoose.Schema({
-  id: Number,
-  styleId: Number,
   size: String,
   quantity: Number,
 });
@@ -70,14 +58,12 @@ const skusSchema = new mongoose.Schema({
 const skus = mongoose.model('Skus', skusSchema);
 
 const photoSchema = new mongoose.Schema({
-  id: Number,
-  styleId: Number,
   url: String,
-  thumbail_url: String,
+  thumbnail_url: String,
 });
 
 const photos = mongoose.model('Photos', photoSchema);
 
 module.exports = {
-  products, features, styles, photos, skus, relatedProducts,
+  products, features, productStyles, photos, skus, relatedProducts, styles,
 };

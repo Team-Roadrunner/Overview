@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 const LineInputStream = require('line-by-line');
 const path = require('path');
 const mongoose = require('mongoose');
-const { styles } = require('./index.js');
+const { productStyles, styles } = require('./index.js');
 
 const stream = new LineInputStream(path.join(__dirname, '../../styles.csv'));
 
@@ -19,23 +20,17 @@ mongoose.connection.on('open', (err, conn) => {
   stream.on('line', (line) => {
     const row = line.split(','); // split the lines on delimiter
     // eslint-disable-next-line new-cap
-    const obj = new styles({
-      product_id: row[1],
-      results: [
-        {
-          id: row[0],
-          name: row[2],
-          sale_price: row[3],
-          original_price: row[4],
-          default: row[5],
-          photos: [],
-          skus: {},
-        },
-      ],
+    const obj = new productStyles({
+      style_id: row[0],
+      name: row[2],
+      sale_price: row[3],
+      original_price: row[4],
+      default: row[5],
+      photos: [],
+      skus: {},
     });
-    // other manipulation
 
-    bulk.insert(obj); // Bulk is okay if you don't need schema
+    bulk.find({ product_id: Number(row[1]) }).upsert().update({ $push: { results: obj } }); // Bulk is okay if you don't need schema
     // defaults. Or can just set them.
 
     counter++;
