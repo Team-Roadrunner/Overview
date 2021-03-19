@@ -20,4 +20,7 @@ const dbHelpers = {
       }
     });
   },
+  getStyle: (callback) => {
+    client.query('')
+  }
 };

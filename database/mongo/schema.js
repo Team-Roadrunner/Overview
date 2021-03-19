@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/overview', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost/productOverview', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let productsSchema = new mongoose.Schema({
   id: { type: Number, index: true },
@@ -9,23 +9,19 @@ let productsSchema = new mongoose.Schema({
   description: String,
   category: String,
   deafult_price: String,
-  features: [
-    {
-      feature: String,
-      value: String,
-    },
-  ],
+  features: Array,
 });
 
-productsSchema.index({id: 1});
+productsSchema.index({ id: 1 });
 let products = mongoose.model('Products', productsSchema);
 
 let productStylesSchema = new mongoose.Schema({
   product_id: Number,
   results: [
     {
-      style_id: String,
+      id: { type: Number, index: true},
       name: String,
+      sale_price: String,
       original_price: String,
       default: Boolean,
       photos: [
@@ -44,6 +40,7 @@ let productStylesSchema = new mongoose.Schema({
   ],
 });
 
+productStylesSchema.index({ id: 1 });
 let productStyles = mongoose.model('ProductStyles', productStylesSchema);
 
 let relatedProductsSchema = new mongoose.Schema({
@@ -53,4 +50,13 @@ let relatedProductsSchema = new mongoose.Schema({
 
 let relatedProducts = mongoose.model('RelatedProducts', relatedProductsSchema);
 
-module.exports = products;
+let featuresSchema = new mongoose.Schema({
+  id: Number,
+  productId: Number,
+  feature: String,
+  value: String,
+});
+
+let features = mongoose.model('Features', featuresSchema);
+
+module.exports = { products, features, productStyles };
