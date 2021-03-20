@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import http from 'k6/http';
 import { sleep } from 'k6';
 
