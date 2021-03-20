@@ -2,9 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
-const router = require('./routes.js');
+const router = require('./router.js');
 
-const PORT = 3000;
+const PORT = 8080;
 
 const app = express();
 
