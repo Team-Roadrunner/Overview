@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
+// eslint-disable-next-line no-unused-vars
+const newrelic = require('newrelic');
 const router = require('./routes.js');
 
 const PORT = 3000;
