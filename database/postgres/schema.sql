@@ -19,14 +19,14 @@ CREATE TABLE productStyle (
   name VARCHAR NOT NULL,
   original_price VARCHAR NOT NULL,
   sale_price VARCHAR NOT NULL,
-  default_style BOOLEAN,
+  "default?" BOOLEAN,
   FOREIGN KEY(productId) REFERENCES productInfo(id)
 );
 
 CREATE TABLE skus (
   id SERIAL PRIMARY KEY,
   style_id SERIAL,
-  quantity VARCHAR NOT NULL,
+  quantity INTEGER NOT NULL,
   size VARCHAR NOT NULL,
   FOREIGN KEY(style_id) REFERENCES productStyle(id)
 );

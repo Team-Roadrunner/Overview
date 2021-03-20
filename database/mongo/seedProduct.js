@@ -1,11 +1,16 @@
+// const fs = require('fs');
+// const LineInputStream = require('byline');
+
 const LineInputStream = require('line-by-line');
 const path = require('path');
 const mongoose = require('mongoose');
 const products = require('./index.js');
 
+// var stream = fs.createReadStream('csv file');
+// stream = byline.createStream(stream);
 const stream = new LineInputStream(path.join(__dirname, '../../product.csv'));
 
-// stream.setDelimiter('\n');
+stream.setDelimiter(',');
 
 mongoose.connection.on('open', (err, conn) => {
   // lower level method, needs connection
@@ -17,6 +22,7 @@ mongoose.connection.on('open', (err, conn) => {
   });
 
   stream.on('line', (line) => {
+    // var row = line.toString('utf-8').split(",");
     const row = line.split(','); // split the lines on delimiter
     // eslint-disable-next-line new-cap
     const obj = new products({
@@ -50,8 +56,8 @@ mongoose.connection.on('open', (err, conn) => {
     if (counter % 1000 != 0) {
       bulk.execute((err, result) => {
         if (err) throw err; // or something
-      // maybe look at result
       });
     }
+    console.log('done');
   });
 });
