@@ -25,11 +25,7 @@ const controllers = {
       if (err) {
         res.status(400).send(err);
       } else {
-        const newResults = {
-          product_id: req.params.product_id,
-          results: results.rows,
-        };
-        res.status(200).send(newResults);
+        res.status(200).send(results.rows[0]);
       }
     });
   },

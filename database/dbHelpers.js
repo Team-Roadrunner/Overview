@@ -10,7 +10,7 @@ const dbHelpers = {
     if (count === undefined) {
       count = 5;
     }
-    client.query(`SELECT * FROM productInfo WHERE id <= ${count}`, (err, results) => {
+    client.query(`SELECT * FROM productInfo LIMIT ${count} OFFSET ${(page - 1) * 20}`, (err, results) => {
       if (err) {
         callback(err);
       } else {
@@ -20,7 +20,7 @@ const dbHelpers = {
   },
   // adjust the result to be structured the way you want.
   getProduct: (req, callback) => {
-    client.query(`SELECT productinfo.*, jsonb_agg(jsonb_build_object('value', features.value, 'feature', features.feature)) AS features FROM productinfo RIGHT JOIN features ON features.product_id = productinfo.id WHERE productinfo.id = ${req.params.id} GROUP BY productinfo.id`, (err, results) => {
+    client.query(`SELECT productinfo.*, json_agg(json_build_object('feature', features.feature, 'value', features.value)) AS features FROM productinfo RIGHT JOIN features ON features.product_id = productinfo.id WHERE productinfo.id = ${req.params.id} GROUP BY productinfo.id`, (err, results) => {
       if (err) {
         callback(err);
       } else {
@@ -29,12 +29,14 @@ const dbHelpers = {
     });
   },
   getStyle: (req, callback) => {
-    client.query(`SELECT productstyle.*, jsonb_agg(jsonb_build_object('thumbnail' , photos.url, 'url', photos.thumbnail_url)) AS photos,
-    json_object_agg(skus.id, json_build_object('quantity', skus.size, 'size', skus.quantity)) AS skus
-    FROM productstyle
-    INNER JOIN skus ON skus.style_id = productstyle.id
-    INNER JOIN photos ON photos.style_id = productstyle.id
-    WHERE productstyle.productid = ${req.params.product_id} GROUP BY productstyle.id`, (err, results) => {
+    client.query(`SELECT productstyle.productid, json_agg(json_build_object('style_id', productstyle.id, 'name', productstyle.name,
+      'original_price', productstyle.original_price, 'sale_price', productstyle.sale_price,
+      'default?', productstyle."default?", 'photos', photos, 'skus', skus)) results FROM productstyle
+      LEFT JOIN (SELECT skus.style_id, json_object_agg(skus.id, json_build_object('quantity', skus.quantity, 'size', skus.size)) skus
+      FROM skus GROUP BY skus.style_id ) skus ON skus.style_id = productstyle.id
+      LEFT JOIN (SELECT photos.style_id, json_agg(json_build_object('thumbnail_url' , photos.url, 'url', photos.thumbnail_url))
+      photos FROM photos GROUP BY photos.style_id) photos ON photos.style_id = productstyle.id
+      WHERE productstyle.productid = ${req.params.product_id} GROUP BY productstyle.productid`, (err, results) => {
       if (err) {
         callback(err);
       } else {
@@ -54,3 +56,4 @@ const dbHelpers = {
 };
 
 module.exports = dbHelpers;
+

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start-p": "nodemon server/app.js",
+    "start-m": "nodemon server/mongo/app.js",
     "build": "webpack -d --watch",
     "prod": "webpack -p",
     "test": "jest "
