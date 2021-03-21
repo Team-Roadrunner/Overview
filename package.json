@@ -8,7 +8,8 @@
     "start-m": "nodemon server/mongo/app.js",
     "build": "webpack -d --watch",
     "prod": "webpack -p",
-    "test": "jest "
+    "test": "jest ",
+    "k6": "k6 run src/script.js"
   },
   "author": "Sarah's Minions Project Catwalk",
   "license": "ISC",

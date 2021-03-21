@@ -7,3 +7,4 @@ photos.csv
 db.js
 related.csv
 newrelic.js
+newrelic_agent.log
