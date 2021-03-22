@@ -22,22 +22,22 @@ export default function () {
   const responses = http.batch([
     [
       'GET',
-      `${BASE_URL}/products`,
+      `${BASE_URL}/products/1`,
       null,
     ],
     [
       'GET',
-      `${BASE_URL}/products?page=1&count=10`,
+      `${BASE_URL}/products/19284`,
       null,
     ],
     [
       'GET',
-      `${BASE_URL}/products?page=2&count=5`,
+      `${BASE_URL}/products/194284`,
       null,
     ],
     [
       'GET',
-      `${BASE_URL}/products?page=2&count=10`,
+      `${BASE_URL}/products/100011`,
       null,
     ],
   ]);

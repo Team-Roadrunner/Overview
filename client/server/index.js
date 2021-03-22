@@ -22,7 +22,6 @@ app.use('/api/interactions', interactionsController);
 
 app.use(express.static(path.join(__dirname + '/../react-client/dist')));
 
-
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
 module.exports = app;
