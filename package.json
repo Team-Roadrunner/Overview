@@ -9,7 +9,7 @@
     "build": "webpack -d --watch",
     "prod": "webpack -p",
     "test": "jest ",
-    "k6": "k6 run src/script.js"
+    "k6": "k6 run spec/script.js"
   },
   "author": "Sarah's Minions Project Catwalk",
   "license": "ISC",

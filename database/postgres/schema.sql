@@ -60,6 +60,14 @@ CREATE TABLE related (
 \COPY photos FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/photos.csv' DELIMITER ',' CSV HEADER;
 \COPY related FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/related.csv' DELIMITER ',' CSV HEADER;
 
+-- THIS IS FOR THE VIRUAL MACHINE UBUNTU
+\COPY productinfo FROM '/home/ubuntu/csvFiles/product.csv' DELIMITER ',' CSV HEADER;
+\COPY productstyle FROM '/home/ubuntu/csvFiles/styles.csv' DELIMITER ',' CSV HEADER;
+\COPY skus FROM '/home/ubuntu/csvFiles/skus.csv' DELIMITER ',' CSV HEADER;
+\COPY features FROM '/home/ubuntu/csvFiles/features.csv' DELIMITER ',' CSV HEADER;
+\COPY photos FROM '/home/ubuntu/csvFiles/photos.csv' DELIMITER ',' CSV HEADER;
+\COPY related FROM '/home/ubuntu/csvFiles/related.csv' DELIMITER ',' CSV HEADER;
+
 
 -- RUN THIS AFTER TABLES AND CSV FILES ARE MADE.
 -- CREATE TABLE fullStyle AS SELECT productstyle.productid, json_agg(json_build_object('style_id', productstyle.id, 'name', productstyle.name,
@@ -70,4 +78,3 @@ CREATE TABLE related (
 -- LEFT JOIN (SELECT photos.style_id, json_agg(json_build_object('thumbnail_url' , photos.url, 'url', photos.thumbnail_url))
 -- photos FROM photos GROUP BY photos.style_id) photos ON photos.style_id = productstyle.id
 -- GROUP BY productstyle.productid;
-
