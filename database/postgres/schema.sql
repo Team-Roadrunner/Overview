@@ -59,3 +59,15 @@ CREATE TABLE related (
 \COPY features FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/features.csv' DELIMITER ',' CSV HEADER;
 \COPY photos FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/photos.csv' DELIMITER ',' CSV HEADER;
 \COPY related FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/related.csv' DELIMITER ',' CSV HEADER;
+
+
+-- RUN THIS AFTER TABLES AND CSV FILES ARE MADE.
+-- CREATE TABLE fullStyle AS SELECT productstyle.productid, json_agg(json_build_object('style_id', productstyle.id, 'name', productstyle.name,
+-- 'original_price', productstyle.original_price, 'sale_price', productstyle.sale_price,
+-- 'default?', productstyle."default?", 'photos', photos, 'skus', skus)) results FROM productstyle
+-- LEFT JOIN (SELECT skus.style_id, json_object_agg(skus.id, json_build_object('quantity', skus.quantity, 'size', skus.size)) skus
+-- FROM skus GROUP BY skus.style_id ) skus ON skus.style_id = productstyle.id
+-- LEFT JOIN (SELECT photos.style_id, json_agg(json_build_object('thumbnail_url' , photos.url, 'url', photos.thumbnail_url))
+-- photos FROM photos GROUP BY photos.style_id) photos ON photos.style_id = productstyle.id
+-- GROUP BY productstyle.productid;
+
