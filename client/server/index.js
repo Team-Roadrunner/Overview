@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
+
 const app = express();
 const PORT = 3000;
 const bodyParser = require('body-parser');
@@ -17,10 +18,10 @@ app.use(bodyParser.json());
 app.use('/api/reviews', reviewsController);
 app.use('/api/shared', sharedController);
 app.use('/api/cart', cartController);
-app.use('/api/qa', questionsController)
+app.use('/api/qa', questionsController);
 app.use('/api/interactions', interactionsController);
 
-app.use(express.static(path.join(__dirname + '/../react-client/dist')));
+app.use(express.static(path.join(`${__dirname}/../react-client/dist`)));
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 

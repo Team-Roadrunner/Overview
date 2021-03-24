@@ -38,7 +38,7 @@ const dbHelpers = {
     });
   },
   getRelated: (req, callback) => {
-    client.query(`SELECT related_product_id FROM related WHERE current_product_id=${req.params.product_id}`, (err, results) => {
+    client.query(`SELECT related FROM releatedid WHERE id=${req.params.product_id}`, (err, results) => {
       if (err) {
         callback(err);
       } else {

@@ -26,8 +26,8 @@ CREATE TABLE productStyle (
 CREATE TABLE skus (
   id SERIAL PRIMARY KEY,
   style_id SERIAL,
-  quantity INTEGER NOT NULL,
   size VARCHAR NOT NULL,
+  quantity INTEGER NOT NULL,
   FOREIGN KEY(style_id) REFERENCES productStyle(id)
 );
 
@@ -61,12 +61,12 @@ CREATE TABLE related (
 \COPY related FROM '/Users/sophiacheong/Desktop/Hackreactor/Overview/related.csv' DELIMITER ',' CSV HEADER;
 
 -- THIS IS FOR THE VIRUAL MACHINE UBUNTU
-\COPY productinfo FROM '/home/ubuntu/csvFiles/product.csv' DELIMITER ',' CSV HEADER;
-\COPY productstyle FROM '/home/ubuntu/csvFiles/styles.csv' DELIMITER ',' CSV HEADER;
-\COPY skus FROM '/home/ubuntu/csvFiles/skus.csv' DELIMITER ',' CSV HEADER;
-\COPY features FROM '/home/ubuntu/csvFiles/features.csv' DELIMITER ',' CSV HEADER;
-\COPY photos FROM '/home/ubuntu/csvFiles/photos.csv' DELIMITER ',' CSV HEADER;
-\COPY related FROM '/home/ubuntu/csvFiles/related.csv' DELIMITER ',' CSV HEADER;
+-- \COPY productinfo FROM '/home/ubuntu/csvFiles/product.csv' DELIMITER ',' CSV HEADER;
+-- \COPY productstyle FROM '/home/ubuntu/csvFiles/styles.csv' DELIMITER ',' CSV HEADER;
+-- \COPY skus FROM '/home/ubuntu/csvFiles/skus.csv' DELIMITER ',' CSV HEADER;
+-- \COPY features FROM '/home/ubuntu/csvFiles/features.csv' DELIMITER ',' CSV HEADER;
+-- \COPY photos FROM '/home/ubuntu/csvFiles/photos.csv' DELIMITER ',' CSV HEADER;
+-- \COPY related FROM '/home/ubuntu/csvFiles/related.csv' DELIMITER ',' CSV HEADER;
 
 
 -- RUN THIS AFTER TABLES AND CSV FILES ARE MADE.
@@ -78,3 +78,6 @@ CREATE TABLE related (
 -- LEFT JOIN (SELECT photos.style_id, json_agg(json_build_object('thumbnail_url' , photos.url, 'url', photos.thumbnail_url))
 -- photos FROM photos GROUP BY photos.style_id) photos ON photos.style_id = productstyle.id
 -- GROUP BY productstyle.productid;
+
+-- CREATE TABLE relatedID as SELECT productinfo.id, json_agg(related_product_id) AS related FROM productinfo
+-- LEFT JOIN related ON related.current_product_id=productinfo.id GROUP BY productinfo.id ORDER BY productinfo.id ASC;

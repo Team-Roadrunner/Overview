@@ -17,7 +17,7 @@ export const options = {
 };
 
 export default function () {
-  const BASE_URL = 'http://localhost:3000/api'; // make sure this is not production
+  const BASE_URL = 'http://localhost:8080/api'; // make sure this is not production
 
   const responses = http.batch([
     [

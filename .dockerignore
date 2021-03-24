@@ -1,1 +1,8 @@
+.get
+.getignore
 node_modules
+npm-debug.log
+Dockerfile*
+docker-compose*
+.pem*
+db.js

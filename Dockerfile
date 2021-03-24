@@ -1,8 +1,8 @@
- FROM node:15.11.0
+ FROM node:15
  ENV NODE_ENV=production
- RUN apk add --no-cache python g++ make
  WORKDIR /app
  COPY ["package.json", "package-lock.json*", "./"]
- RUN npm install --production
+ RUN npm install
  COPY . .
- CMD [ "node", "./server/app.js"]
+ EXPOSE 5000
+ CMD [ "node", "server/app.js"]
