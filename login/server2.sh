@@ -1,0 +1,1 @@
+ssh -i "../pem/SDC-DB.pem" ubuntu@ec2-54-183-176-203.us-west-1.compute.amazonaws.com

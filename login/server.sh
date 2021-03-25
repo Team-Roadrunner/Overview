@@ -1,1 +1,1 @@
-ssh -i "../pem/SDC-DB.pem" ubuntu@ec2-3-101-47-228.us-west-1.compute.amazonaws.com
+ssh -i "../pem/SDC-DB.pem" ubuntu@ec2-54-183-214-41.us-west-1.compute.amazonaws.com
