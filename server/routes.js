@@ -17,4 +17,9 @@ router
   .route('/products/:product_id/related')
   .get(controllers.getRelated);
 
+router
+  .route('loaderio-32b08299a276c01002d85ed45eac0cc3', (req, res) => {
+    res.send('loaderio-32b08299a276c01002d85ed45eac0cc3');
+  });
+
 module.exports = router;
