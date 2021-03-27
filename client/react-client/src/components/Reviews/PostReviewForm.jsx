@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import header from '../../../../config.js';
 
 const PostReviewForm = (props) => {
   const [imageModalIsOpen, setImageModalIsOpen] = useState(false);

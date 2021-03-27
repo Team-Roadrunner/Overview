@@ -1,6 +1,5 @@
 const axios = require('axios');
-const token = require('../../config.js')
-
+// const token = require('../../config.js')
 
 const questionsController = (req, res) => {
   let method = req.method;
@@ -9,13 +8,12 @@ const questionsController = (req, res) => {
   console.log(method, url)
   axios({
     method: `${method}`,
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/qa${url}`,
+    url: `http://3.16.45.230${url}`,
     headers: {
       "Accept": "application/json, text/plain, */*",
       "User-Agent": "axios/0.21.1",
-      'authorization': `${token}`
     },
-    data: body
+    data: body,
   })
     .then((data) => {
       res.send(data.data)

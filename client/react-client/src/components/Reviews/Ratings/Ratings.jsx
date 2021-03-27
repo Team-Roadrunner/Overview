@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import header from '../../../../../config.js';
 import RatingsBreakdownList from './RatingsBreakdownList.jsx';
 import CharacteristicsList from './Characteristics/CharacteristicsList.jsx';
 import Stars from './Stars.jsx';

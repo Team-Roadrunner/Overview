@@ -1,5 +1,5 @@
 const axios = require('axios');
-const token = require('../../config.js')
+// const token = require('../../config.js')
 
 
 const reviewsController = (req, res) => {

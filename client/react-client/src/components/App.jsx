@@ -46,7 +46,7 @@ function App() {
   };
 
   const selectProduct = (id) => {
-    axios.get(`/api/shared/products/${id}`)
+    axios.get(`/api/shared/api/products/${id}`)
       .then((results) => {
         updateSelectedProduct(results.data);
       })
@@ -55,7 +55,7 @@ function App() {
 
   const getProducts = () => {
     const id = 16060;
-    axios.get(`/api/shared/products/${id}`)
+    axios.get(`/api/shared/api/products/${id}`)
       .then((data) => {
         updateSelectedProduct(data.data);
       })
@@ -101,7 +101,7 @@ function App() {
                 avgRating={avgRatings}
                 darkMode={darkMode}
               />
-              <RelatedItemsList
+              {/* <RelatedItemsList
                 clickTracker={clickTracker}
                 selectProduct={selectProduct}
                 currentProduct={selectedProduct}
@@ -122,7 +122,7 @@ function App() {
                 metadata={metadata}
                 getRatings={getRatings}
                 currentProduct={selectedProduct.id}
-              />
+              /> */}
             </>
           )}
           />

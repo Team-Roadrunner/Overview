@@ -11,7 +11,7 @@ function ProductDescription({ product }) {
   const [features, changeFeatures] = useState([]);
 
   const getAllProductInfo = (id) => {
-    axios.get(`/api/shared/products/${id}`)
+    axios.get(`/api/shared/api/products/${id}`)
       .then((res) => {
         changeFeatures(res.data.features);
       })

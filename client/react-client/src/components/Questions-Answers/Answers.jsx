@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import header from '../../../../config.js';
 import AnswerModals from './AnswerModals.jsx';
 import AnswerPicture from './AnswerPicture.jsx';
 

@@ -54,7 +54,7 @@ function StyleSelector({
   }
 
   const getStyles = (id) => {
-    axios.get(`/api/shared/products/${id}/styles`)
+    axios.get(`/api/shared/api/products/${id}/styles`)
       .then((res) => {
         updateStyles(res.data.results);
         const correctedUrls = [];

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-import header from '../../../../config.js';
 import Stars from '../Reviews/Ratings/Stars.jsx';
 import Carousel from 'react-elastic-carousel';
 import styled from 'styled-components';

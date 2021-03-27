@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Highlighter from 'react-highlight-words';
-import header from '../../../../config.js';
 import ReviewPhotos from './ReviewPhotos.jsx';
 import Stars from './Ratings/Stars.jsx';
 
@@ -19,7 +18,7 @@ const ReviewTile = ({
       setLongerThan250(true);
     }
   }, [review]);
-  
+
   useEffect(() => {
     if (searchQuery.length > 2) {
       setIsHighlighting(true);

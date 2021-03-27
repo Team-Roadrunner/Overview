@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import header from '../../../../config.js';
 import SortForm from './SortForm.jsx';
 import ReviewsList from './ReviewsList.jsx';
 import PostReviewForm from './PostReviewForm.jsx';
